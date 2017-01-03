@@ -10,10 +10,6 @@ services:
     command: "bash -c 'bundle exec puma -C config/puma.rb -e production'"
     build: .
     env_file: .env
-    environment:
-      PG_HOST: db
-      RAILS_ENV: $RAILS_ENV
-      RAILS_ROOT: $RAILS_ROOT
     links:
       - db
     expose:
