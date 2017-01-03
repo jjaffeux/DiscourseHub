@@ -1,0 +1,32 @@
+version: '2.1'
+volumes:
+  data:
+services:
+  db:
+    image: postgres:9.5.0
+    volumes:
+      - data:/var/lib/postgresql/data
+  app:
+    command: "bash -c 'bundle exec puma -C config/puma.rb -e production'"
+    build: .
+    env_file: .env
+    environment:
+      PG_HOST: db
+      RAILS_ENV: $RAILS_ENV
+      RAILS_ROOT: $RAILS_ROOT
+    links:
+      - db
+    expose:
+      - "3000"
+    volumes:
+      - .:/var/www/discoursehub
+  web:
+    build:
+      context: .
+      dockerfile: config/containers/Dockerfile-nginx
+    links:
+      - app
+    ports:
+      - "80:80"
+    volumes_from:
+      - app

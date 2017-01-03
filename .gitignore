@@ -13,6 +13,8 @@
 !/log/.keep
 !/tmp/.keep
 node_modules/*
+.env
+vendor/bundle/ruby
 
 # Ignore Byebug command history file.
 .byebug_history
